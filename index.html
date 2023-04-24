@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>   
+        <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+        <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>   
+        <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+        <script src="./js/shoot.js"></script>
+        <script src="./js/walls.js"></script>
+    </head>
+    <body>
+        <a-scene id="scene" fog="type:linear">
+
+            <a-assets>        
+                <a-asset-item
+                  id="shooter"
+                  src="./models/shooter/gun.gltf"
+                ></a-asset-item>
+
+                <audio 
+                    id="shoot" 
+                    src="./sounds/shoot.mp3"
+                ></audio>
+    
+                <audio
+                    id="footsteps"
+                    src="./sounds/footStep.mp3"
+                ></audio>
+            </a-assets>
+
+
+
+            <a-entity id="environment" environment="preset:default; skyType:gradient; lighting: ambient"></a-entity>
+
+            <!--Camera and Cursor-->
+            <a-entity id="camera" camera position="0 1.6 0" wasd-controls look-controls="pointerLockEnabled: false">
+                <a-entity
+                    id="weapon"
+                    gltf-model="#shooter"
+                    position="0 -4.4 3"
+                    rotation="0 180 0"
+                    scale="0.35 1 1"          
+                ></a-entity>
+                <a-cursor></a-cursor>
+            </a-entity>
+
+            <!--Sound-->
+            <a-entity id="sound1" sound="src:#shoot; poolSize:2; autoPlay:false; volume:1; loop:false"></a-entity>    
+            <a-entity id="sound2" sound="src:#footsteps; poolSize:2; autoPlay:false; volume:4; loop:false"></a-entity> 
+
+            <a-entity bullets walls></a-entity>
+
+            <a-plane
+            id="ground"
+            repeat="5 5"
+            position="0 0 0"
+            rotation="-90 0 0"
+            height="200"
+            width="200"
+            static-body
+            visible="false"
+          >
+          </a-plane>
+
+          <a-entity id="walls">
+            <a-box position="0 0 -80" height="100" width="500" depth="1" color="blue" static-body></a-box>
+            <a-box position="0 0 20" height="100" width="500" depth="1" color="red" static-body></a-box>
+            <a-box position="60 0 0" height="100" width="500" depth="1" rotation="0 90 0" color="green" static-body></a-box>
+            <a-box position="-60 0 0" height="100" width="500" depth="1" rotation="0 90 0" color="yellow" static-body></a-box>
+            <a-box position="0 60 0" depth="400" width="200" height="1" color="black"></a-box>
+          </a-entity>
+            
+        </a-scene>
+    </body>
+</html>
